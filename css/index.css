@@ -19,6 +19,7 @@
     -webkit-text-size-adjust: 100%;
 }
 
-a {
+div {
     font-family: 'MyWebFont', monospace;
+    text-align: center;
 }
