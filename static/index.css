@@ -3,20 +3,23 @@
     font-size: 16px;
     line-height: 24px;
     font-weight: 400;
-    color: #2f2f2f;
-    background-color: #ffffff;
+    color: #ffffff;
+    background-color: #2f2f2f;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
 }
+
+body {
+    height: 20000px;
+}
+
 div {
     text-align: center;
 }
-img {
-    scale: 1;
-}
+
 button {
     margin: 4rem;
     border-radius: 8px;
@@ -35,12 +38,12 @@ button {
     scale: 1;
 }
 button:hover {
-    filter: drop-shadow(0 0 0.75rem #394ed8);
-    border-color: #394ed8;
+    filter: drop-shadow(0 0 0.75rem #ffffff);
+    border-color: #ffffff;
     scale: 1.25;
 }
 button:active {
-    border-color: #394ed8;
+    border-color: #2f2f2f;
     background-color: #0f0f0f69;
 }
 #title {
@@ -55,20 +58,11 @@ canvas {
     width: 100%;
     height: 25rem;
 }
-/*.wrapper::before {*/
-/*    content: "something here";*/
-/*    !* The actual text to use as background *!*/
-/*    position: absolute;*/
-/*    top: 50%;*/
-/*    left: 50%;*/
-/*    transform: translate(-50%, -50%);*/
-/*    !* Center and rotate for effect *!*/
-/*    font-size: 1em;*/
-/*    !* Adjust size as needed *!*/
-/*    color: rgba(0, 0, 0, 0.1);*/
-/*    !* Semi-transparent color for background effect *!*/
-/*    z-index: -1;*/
-/*    !* Places the text behind the main content *!*/
-/*    white-space: nowrap;*/
-/*    !* Prevents text from wrapping *!*/
-/*}*/
+#background {
+    position: absolute; /* Or 'absolute' if you want it to scroll with content */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Puts the canvas behind other content */
+}

@@ -20,8 +20,14 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord)
     float g = cos(3.0 * uv.y + t2) * 0.5 + 0.5;
     float b = sin(4.0 * (uv.x + uv.y) + t1 + t2) * 0.5 + 0.5;
 
-    // Output the final color
-    fragColor = vec4(r, g, b, 1.0);
+    vec3 color = vec3(r, g, b);
+    vec3 background = vec3(0.18431372549);
+
+    float alpha = pow(uv.y, 1.5);
+
+    vec3 result = (color * alpha) + (background * (1.0 - alpha));
+
+    fragColor = vec4(result, 1.0);
 }
 
 void main() {
