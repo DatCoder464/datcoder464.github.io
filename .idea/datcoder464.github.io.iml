@@ -9,5 +9,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="less" level="application" />
+    <orderEntry type="library" name="GlslCanvas" level="application" />
   </component>
 </module>
