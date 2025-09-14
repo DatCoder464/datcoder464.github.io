@@ -52,6 +52,8 @@ async function main() {
     let canvas = document.getElementById("c");
     let gl = canvas.getContext('webgl2');
 
+    let slider = document.getElementById("textSize");
+
     let fragmentSource = await fetch('style/assets/shader.frag')
         .then(res => res.text());
     let vertexSource = await fetch('style/assets/shader.vert')
@@ -83,6 +85,7 @@ async function main() {
 
     let resolutionUniformLocation = gl.getUniformLocation(program, "u_resolution");
     let timeUniformLocation = gl.getUniformLocation(program, "u_time");
+    let textSizeUniformLocation = gl.getUniformLocation(program, "u_textSize");
 
     let t = 0.0;
 
@@ -100,6 +103,7 @@ async function main() {
 
         gl.uniform2f(resolutionUniformLocation, gl.canvas.width, gl.canvas.height);
         gl.uniform1f(timeUniformLocation, t);
+        gl.uniform1f(textSizeUniformLocation, slider.value);
 
         gl.vertexAttribPointer(
             positionAttributeLocation, 2, gl.FLOAT, false, 0, 0)

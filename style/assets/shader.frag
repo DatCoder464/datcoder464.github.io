@@ -6,6 +6,7 @@ precision mediump float;
 
 uniform float u_time;
 uniform vec2 u_resolution;
+uniform float u_textSize;
 
 out vec4 fragColor;
 
@@ -70,8 +71,7 @@ float noise(vec2 p )
     return 0.5 + 0.5*n;
 }
 
-vec3 heading() {
-    vec2 uv = gl_FragCoord.xy/u_resolution.xy;
+vec3 heading(vec2 uv) {
     float ratio = u_resolution.x / u_resolution.y;
 
     vec2 tuv = uv;
@@ -110,10 +110,10 @@ vec3 heading() {
 }
 
 void main() {
-    vec2 uv = floor(gl_FragCoord.xy/8.0)*8.0/u_resolution.xy;
-    vec3 col = heading();
+    vec2 uv = floor(gl_FragCoord.xy/u_textSize)*u_textSize/u_resolution.xy;
+    vec3 col = heading(uv);
 
-    float alpha = pow(uv.y, 1.5);
+    float alpha = pow(uv.y, 4.0);
     col = (col * alpha) + (vec3(0.18431372549) * (1.0 - alpha));
 
     float gray = 0.3 * col.r + 0.59 * col.g + 0.11 * col.b;
@@ -171,7 +171,7 @@ void main() {
     if (gray > 0.9535) n = 33061407;
     if (gray > 0.9767) n = 11512810;
 
-    vec2 p = mod(gl_FragCoord.xy/8.0, 2.0) - vec2(1.0);
+    vec2 p = mod(gl_FragCoord.xy/u_textSize, 2.0) - vec2(1.0);
 
     float b = character(n, p);
 
