@@ -72,48 +72,24 @@ float noise(vec2 p )
 }
 
 vec3 heading(vec2 uv) {
-    float ratio = u_resolution.x / u_resolution.y;
-
-    vec2 tuv = uv;
-    tuv -= .5;
-
-    // rotate with Noise
-    float degree = noise(vec2(u_time*.1, tuv.x*tuv.y));
-
-    tuv.y *= 1./ratio;
-    tuv *= Rot(radians((degree-.5)*720.+180.));
-    tuv.y *= ratio;
-
-
-    // Wave warp with sin
-    float frequency = 5.;
-    float amplitude = 30.;
-    float speed = u_time * 2.;
-    tuv.x += sin(tuv.y*frequency+speed)/amplitude;
-    tuv.y += sin(tuv.x*frequency*1.5+speed)/(amplitude*.5);
-
-
-    // draw the image
-    vec3 colorYellow = vec3(.957, .804, .623);
-    vec3 colorDeepBlue = vec3(.192, .384, .933);
-    vec3 layer1 = mix(colorYellow, colorDeepBlue, S(-.3, .2, (tuv*Rot(radians(-5.))).x));
-
-    vec3 colorRed = vec3(.910, .510, .8);
-    vec3 colorBlue = vec3(0.350, .71, .953);
-    vec3 layer2 = mix(colorRed, colorBlue, S(-.3, .2, (tuv*Rot(radians(-5.))).x));
-
-    vec3 finalComp = mix(layer1, layer2, S(.5, -.3, tuv.y));
-
-    vec3 col = finalComp;
-
-    return col;
+    float d = -u_time * 0.5;
+    float a = 0.0;
+    for (float i = 0.0; i < 4.0; ++i) {
+        a += cos(i - d - a * uv.x);
+        d += sin(uv.y * i + a);
+    }
+    d += u_time * 0.5;
+    vec3 col = vec3(cos(uv * vec2(d, a)) * 0.6 + 0.4, cos(a + d) * 0.5 + 0.5);
+    return cos(col * cos(vec3(d, a, 2.5)) * 0.5 + 0.5);
 }
 
 void main() {
     vec2 uv = floor(gl_FragCoord.xy/u_textSize)*u_textSize/u_resolution.xy;
     vec3 col = heading(uv);
 
-    float alpha = pow(uv.y, 4.0);
+    col *= col;
+
+    float alpha = pow(uv.y, 1.5);
     col = (col * alpha) + (vec3(0.18431372549) * (1.0 - alpha));
 
     float gray = 0.3 * col.r + 0.59 * col.g + 0.11 * col.b;
@@ -180,5 +156,6 @@ void main() {
     } else {
         fragColor = vec4(vec3(0.18431372549), 1.0);
     }
-
+//
+//    fragColor = vec4(col, 1.0);
 }
